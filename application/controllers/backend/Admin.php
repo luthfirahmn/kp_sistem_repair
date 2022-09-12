@@ -45,6 +45,11 @@ class Admin extends CI_Controller
 			$row = array();
 			$row[] = $btn_edit . ' ' . $btn_delete;
 			$row[] = $val->nama;
+			$row[] = $val->no_telp;
+			$row[] = $val->jenis_kelamin;
+			$row[] = $val->tanggal_lahir;
+			$row[] = $val->alamat;
+			$row[] = $val->posisi;
 			$row[] = $val->username;
 			$row[] = $val->role;
 			$data[] = $row;
@@ -137,6 +142,12 @@ class Admin extends CI_Controller
 										FROM ms_role
 								");
 		$role = $query->result();
+
+		$query = $this->db->query("SELECT *
+									FROM ms_parameter
+									WHERE param_variable = 'POSISI'
+									");
+		$posisi = $query->result();
 		/** DATA SEND TO VIEW */
 
 		$data_content                 = array();
@@ -145,6 +156,7 @@ class Admin extends CI_Controller
 		$data_content['breadcrumb1']  = 'Admin Form';
 		$data_content['status_form']  = 0;
 		$data_content['role']  = $role;
+		$data_content['posisi']  = $posisi;
 
 		$config["content_file"] = "admin/form";
 		$config["content_data"] = $data_content;
@@ -155,15 +167,21 @@ class Admin extends CI_Controller
 
 	public function form_edit($param)
 	{
+		$query = $this->db->query("SELECT *
+										FROM ms_parameter
+										WHERE param_variable = 'POSISI'
+										");
+		$posisi = $query->result();
 
 		$query = $this->db->query("SELECT *
 										FROM ms_role
 								");
 		$role = $query->result();
 
-		$query = $this->db->query("SELECT *
+		$query = $this->db->query("SELECT table1.*,t2.role
 										FROM {$this->table} table1 
-										WHERE id = {$param} 
+										LEFT JOIN ms_role t2 ON t2.id = table1.id_role
+										WHERE table1.id = {$param} 
 										");
 		$all_data = $query->row();
 
@@ -177,6 +195,7 @@ class Admin extends CI_Controller
 		$data_content['id']  = $all_data->id;
 		$data_content['all_data']  = $all_data;
 		$data_content['role']  = $role;
+		$data_content['posisi']  = $posisi;
 
 
 		$config["content_file"] = "admin/form";
@@ -205,6 +224,11 @@ class Admin extends CI_Controller
 		$data['nama'] 	= $_POST["nama"];
 		$data['id_role'] 	= $_POST["id_role"];
 		$data['password'] 	= md5($_POST["password"]);
+		$data['no_telp'] 	= $_POST["no_telp"];
+		$data['jenis_kelamin'] 	= $_POST["jenis_kelamin"];
+		$data['tanggal_lahir'] 	= $_POST["tanggal_lahir"];
+		$data['alamat'] 	= $_POST["alamat"];
+		$data['posisi'] 	= $_POST["posisi"];
 
 		$validation = $this->validation($data);
 
@@ -228,6 +252,11 @@ class Admin extends CI_Controller
 		$data['nama'] 	= $_POST["nama"];
 		$data['id_role'] 	= $_POST["id_role"];
 		$data['password'] 	= md5($_POST["password"]);
+		$data['no_telp'] 	= $_POST["no_telp"];
+		$data['jenis_kelamin'] 	= $_POST["jenis_kelamin"];
+		$data['tanggal_lahir'] 	= $_POST["tanggal_lahir"];
+		$data['alamat'] 	= $_POST["alamat"];
+		$data['posisi'] 	= $_POST["posisi"];
 
 		$validation = $this->validation($data);
 

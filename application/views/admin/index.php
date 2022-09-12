@@ -39,6 +39,11 @@
     									<tr>
     										<th>Action</th>
     										<th>Nama</th>
+    										<th>No Telepon</th>
+    										<th>Jenis Kelamin</th>
+    										<th>Tanggal Lahir</th>
+    										<th>Alamat</th>
+    										<th>Posisi</th>
     										<th>Username</th>
     										<th>Role</th>
     									</tr>

@@ -47,6 +47,67 @@
     										<div class="col-12">
     											<div class="form-group row">
     												<div class="col-sm-3 col-form-label">
+    													<label for="first-name">No Telepon</label>
+    												</div>
+    												<div class="col-sm-9">
+    													<input type="number" class="form-control" name="no_telp" placeholder="No Telepon" value="<?= isset($all_data->no_telp) ? $all_data->no_telp : '' ?>" />
+    												</div>
+    											</div>
+    										</div>
+    										<div class="col-12">
+    											<div class="form-group row">
+    												<div class="col-sm-3 col-form-label">
+    													<label for="first-name">Jenis Kelamin</label>
+    												</div>
+    												<div class="col-sm-9">
+    													<select class="form-control" name="jenis_kelamin">
+    														<option value="<?= isset($all_data->jenis_kelamin) ? $all_data->jenis_kelamin : '' ?>" selected><?= isset($all_data->jenis_kelamin) ? $all_data->jenis_kelamin : 'Pilih Jenis Kelamin' ?></option>
+    														<option value="Laki-Laki">Laki-Laki</option>
+    														<option value="Perempuan">Perempuan</option>
+    													</select>
+    												</div>
+    											</div>
+    										</div>
+    										<div class="col-12">
+    											<div class="form-group row">
+    												<div class="col-sm-3 col-form-label">
+    													<label for="first-name">Tanggal Lahir</label>
+    												</div>
+    												<div class="col-sm-9">
+    													<input type="date" class="form-control" name="tanggal_lahir" placeholder="Tanggal Lahir" value="<?= isset($all_data->tanggal_lahir) ? $all_data->tanggal_lahir : '' ?>" />
+    												</div>
+    											</div>
+    										</div>
+    										<div class="col-12">
+    											<div class="form-group row">
+    												<div class="col-sm-3 col-form-label">
+    													<label for="first-name">Alamat</label>
+    												</div>
+    												<div class="col-sm-9">
+    													<input type="text" class="form-control" name="alamat" placeholder="Alamat" value="<?= isset($all_data->alamat) ? $all_data->alamat : '' ?>" />
+    												</div>
+    											</div>
+    										</div>
+    										<div class="col-12">
+    											<div class="form-group row">
+    												<div class="col-sm-3 col-form-label">
+    													<label for="first-name">Posisi</label>
+    												</div>
+    												<div class="col-sm-9">
+    													<select class="form-control" name="posisi">
+    														<option value="<?= isset($all_data->posisi) ? $all_data->posisi : '' ?>" selected><?= isset($all_data->posisi) ? $all_data->posisi : 'Pilih Posisi' ?></option>
+    														<?php
+															foreach ($posisi as $row) {
+																echo '<option value="' . $row->param_id . '">' . $row->param_value . '</option>';
+															}
+															?>
+    													</select>
+    												</div>
+    											</div>
+    										</div>
+    										<div class="col-12">
+    											<div class="form-group row">
+    												<div class="col-sm-3 col-form-label">
     													<label for="first-name">Username</label>
     												</div>
     												<div class="col-sm-9">
@@ -71,7 +132,7 @@
     												</div>
     												<div class="col-sm-9">
     													<select class="form-control" name="id_role">
-    														<option value="<?= isset($all_data->id_role) ? $all_data->id_role : '' ?>" selected><?= isset($all_data->id_role) ? $all_data->id_role : 'Pilih Role' ?></option>
+    														<option value="<?= isset($all_data->id_role) ? $all_data->id_role : '' ?>" selected><?= isset($all_data->id_role) ? $all_data->role : 'Pilih Role' ?></option>
     														<?php
 															foreach ($role as $row) {
 																echo '<option value="' . $row->id . '">' . $row->role . '</option>';
