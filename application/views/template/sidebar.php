@@ -34,9 +34,9 @@
  			</li> -->
  			<li class=" navigation-header"><span data-i18n="Charts &amp; Maps">Data Master</span><i data-feather="more-horizontal"></i>
  			</li>
- 			<li class=" nav-item"><a class="d-flex align-items-center" href="<?= BACKEND_URL . 'karyawan' ?>"><i data-feather='users'></i><span class="menu-title text-truncate" data-i18n="Chat">Data Karyawan</span></a>
- 			</li>
- 			<li class=" nav-item"><a class="d-flex align-items-center" href="<?= BACKEND_URL . 'admin' ?>"><i data-feather='user'></i><span class="menu-title text-truncate" data-i18n="Chat">Data Admin</span></a>
+ 			<!-- <li class=" nav-item"><a class="d-flex align-items-center" href="<?= BACKEND_URL . 'karyawan' ?>"><i data-feather='users'></i><span class="menu-title text-truncate" data-i18n="Chat">Data Karyawan</span></a>
+ 			</li> -->
+ 			<li class=" nav-item"><a class="d-flex align-items-center" href="<?= BACKEND_URL . 'admin' ?>"><i data-feather='user'></i><span class="menu-title text-truncate" data-i18n="Chat">Data Karyawan</span></a>
  			</li>
  			<li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Ekstra</span><i data-feather="more-horizontal"></i>
  			</li>

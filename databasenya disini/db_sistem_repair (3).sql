@@ -20,6 +20,8 @@ CREATE TABLE `ms_barang` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `ms_barang` (`id`, `kode_barang`, `barang`, `size`, `model`, `merk`, `created_time`, `created_by`, `updated_time`, `updated_by`) VALUES
+(1,	'',	'tes',	'tes',	'tes',	'tes',	'2022-08-16 03:30:48',	'admin',	'2022-08-16 03:31:09',	'admin');
 
 DROP TABLE IF EXISTS `ms_barang_merk`;
 CREATE TABLE `ms_barang_merk` (
@@ -28,6 +30,8 @@ CREATE TABLE `ms_barang_merk` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `ms_barang_merk` (`id`, `merk`) VALUES
+(1,	'nike');
 
 DROP TABLE IF EXISTS `ms_barang_model`;
 CREATE TABLE `ms_barang_model` (
@@ -36,6 +40,8 @@ CREATE TABLE `ms_barang_model` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `ms_barang_model` (`id`, `model`) VALUES
+(1,	'terbaru');
 
 DROP TABLE IF EXISTS `ms_karyawan`;
 CREATE TABLE `ms_karyawan` (
@@ -59,13 +65,19 @@ CREATE TABLE `ms_login` (
   `username` varchar(50) NOT NULL,
   `password` varchar(100) NOT NULL,
   `nama` varchar(100) NOT NULL,
+  `no_telp` varchar(100) NOT NULL,
+  `jenis_kelamin` varchar(100) NOT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
+  `alamat` text NOT NULL,
+  `posisi` varchar(50) NOT NULL,
   `id_role` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `ms_login` (`id`, `username`, `password`, `nama`, `id_role`) VALUES
-(7,	'admin@admin.com',	'0192023a7bbd73250516f069df18b500',	'Super Admin',	1),
-(9,	'luthfirrahman696@gmail.com',	'202cb962ac59075b964b07152d234b70',	'Muhamad Luthfirrahman',	1);
+INSERT INTO `ms_login` (`id`, `username`, `password`, `nama`, `no_telp`, `jenis_kelamin`, `tanggal_lahir`, `alamat`, `posisi`, `id_role`) VALUES
+(7,	'admin@admin.com',	'0192023a7bbd73250516f069df18b500',	'Super Admin',	'',	'',	NULL,	'',	'',	1),
+(9,	'luthfirrahman696@gmail.com',	'202cb962ac59075b964b07152d234b70',	'Muhamad Luthfirrahman',	'',	'',	NULL,	'',	'',	1),
+(10,	'tes@tes.com',	'202cb962ac59075b964b07152d234b70',	'Muhamad Luthfirrahman',	'3123',	'Laki-Laki',	'1232-03-12',	'Rancaekek',	'Manager',	1);
 
 DROP TABLE IF EXISTS `ms_parameter`;
 CREATE TABLE `ms_parameter` (
@@ -89,6 +101,8 @@ CREATE TABLE `ms_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `ms_role` (`id`, `role`) VALUES
+(1,	'Super Admin');
 
 DROP TABLE IF EXISTS `tr_barang_masuk`;
 CREATE TABLE `tr_barang_masuk` (
@@ -108,5 +122,9 @@ CREATE TABLE `tr_barang_masuk` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `tr_barang_masuk` (`id`, `po_no`, `id_barang`, `barang`, `style_no`, `grade`, `tot`, `remark`, `po_date`, `created_time`, `created_by`, `updated_time`, `updated_by`) VALUES
+(2,	'123',	14,	'',	'123',	'B',	132,	'C',	'2022-05-26',	'2022-05-26 19:18:48',	'admin',	'2022-05-26 19:42:37',	'admin'),
+(4,	'123123',	15,	'',	'2133',	'123',	123,	'231',	'2022-05-26',	'2022-05-26 20:28:46',	'admin',	'2022-08-05 08:14:23',	'admin'),
+(5,	'123',	0,	'tes',	'31231',	'3',	1,	'12313',	'2022-08-05',	'2022-08-05 23:09:33',	'admin',	'2022-08-05 23:10:56',	'admin');
 
--- 2022-08-05 16:20:34
+-- 2022-09-12 14:08:10
