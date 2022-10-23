@@ -1,5 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class Barang_selesai extends CI_Controller
 {
 	function __construct()
@@ -11,6 +14,10 @@ class Barang_selesai extends CI_Controller
 		// $this->user = $this->session->userdata('user');
 		$this->user = 'admin';
 		$this->table = 'tr_barang_masuk';
+
+		require APPPATH . 'libraries/phpmailer/src/Exception.php';
+		require APPPATH . 'libraries/phpmailer/src/PHPMailer.php';
+		require APPPATH . 'libraries/phpmailer/src/SMTP.php';
 	}
 
 	public function index()
@@ -37,11 +44,13 @@ class Barang_selesai extends CI_Controller
 		$number = $_POST['start'];
 		foreach ($all_data as $key => $val) {
 
-			$btn_report = '<button type="button" onclick="myForm_edit(' . $val->id . ')" class="btn btn-outline-primary btn-sm">
-						<i data-feather="printer"></i> Report</button>';
+			$btn_report = '<button type="button" onclick="myForm_edit(' . $val->id . ')" class="btn btn-icon rounded-circle btn-outline-primary btn-sm">
+						<i data-feather="printer"></i></button>';
+			$btn_delete = '<button type="button" onclick="btn_delete(' . $val->id . ')" class="btn btn-icon rounded-circle btn-outline-danger btn-sm">
+			<i data-feather="trash"></i> </button>';
 			$number++;
 			$row = array();
-			$row[] = $btn_report;
+			$row[] = $btn_report . ' ' . $btn_delete;
 			$row[] = $val->po_no;
 			$row[] = $val->style_no;
 			$row[] = $val->barang;
@@ -270,6 +279,19 @@ class Barang_selesai extends CI_Controller
 		}
 	}
 
+	public function report_all()
+	{
+		$query = $this->db->query("SELECT *
+									FROM {$this->table} table1 
+									");
+		$all_data = $query;
+
+		$data_content['data']  		= $all_data->row();
+		$data_content['all_data']  = $all_data->result();
+		$this->send($this->input->post('email'));
+		$this->load->view('barang_selesai/print_all', $data_content);
+	}
+
 	public function report($param)
 	{
 		$query = $this->db->query("SELECT *
@@ -293,5 +315,85 @@ class Barang_selesai extends CI_Controller
 		// $config["content_data"] = $data_content;
 
 		$this->load->view('barang_selesai/print', $data_content);
+	}
+
+	public function send($email)
+	{
+		// PHPMailer object
+		$response = false;
+		$mail = new PHPMailer();
+
+		// SMTP configuration
+		$mail->isSMTP();
+		$mail->Host     = 'smtp.gmail.com';
+		$mail->SMTPAuth = true;
+		$mail->Username = 'akunduaaov@gmail.com'; // user email anda
+		$mail->Password = 'hmldsfwgijthnwtf'; // password email anda
+		$mail->SMTPSecure = 'ssl';
+		$mail->Port     = 465;
+
+		$mail->setFrom('akunduaaov@gmail.com', 'PT PRATAMA'); // user email anda
+		// $mail->addReplyTo('luthfirrahman696@gmail.com', ''); //user email anda
+
+		// Email subject
+		$mail->Subject = 'REPORT DATA BARANG SELESAI'; //subject email
+
+		// Add a recipient
+		$mail->addAddress($email); //email tujuan pengiriman email
+
+		// Set email format to HTML
+		$mail->isHTML(true);
+
+		$query = $this->db->query("SELECT * FROM tr_barang_masuk ");
+		$row = $query->result();
+		// Email body content
+		$mailContent = "";
+		$mailContent .= "<p><b>REPORT DATA BARANG SELESAI</b></p>
+		<style>
+		.table1 {
+			font-family: sans-serif;
+			color: #232323;
+			border-collapse: collapse;
+		}
+		 
+		.table1, th, td {
+			border: 5px solid #000;
+			padding: 8px 20px;
+		}
+		</style>
+		<table class='table1' style='border: 1px solid #000;'>";
+		$mailContent .= "
+			<tr style='border: 1px solid #000;'>
+			<th style='border: 1px solid #000;'>PO NUMBER</th>
+			<th style='border: 1px solid #000;'>STYLE NO</th>
+			<th style='border: 1px solid #000;'>BARANG</th>
+			<th style='border: 1px solid #000;'>GRADE</th>
+			<th style='border: 1px solid #000;'>TOT</th>
+			<th style='border: 1px solid #000;'>REMARK</th>
+			<th style='border: 1px solid #000;'>TANGGAL PO</th>
+			</tr>";
+
+		foreach ($row as $result) {
+			$mailContent .= "
+			<tr style='border: 1px solid #000;'>
+			<td style='border: 1px solid #000;'>" . $result->po_no . "</td>
+			<td style='border: 1px solid #000;'>" . $result->style_no . "</td>
+			<td style='border: 1px solid #000;'>" . $result->barang . "</td>
+			<td style='border: 1px solid #000;'>" . $result->grade . "</td>
+			<td style='border: 1px solid #000;'>" . $result->tot . "</td>
+			<td style='border: 1px solid #000;'>" . $result->remark . "</td>
+			<td style='border: 1px solid #000;'>" . $result->po_date . "</td>
+			";
+		}
+		$mailContent .= "</tr></table>"; // isi email
+		$mail->Body = $mailContent;
+
+		// Send email
+		if (!$mail->send()) {
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			echo 'Message has been sent';
+		}
 	}
 }
